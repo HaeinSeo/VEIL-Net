@@ -26,26 +26,13 @@ The model maps **2,048 input points to 16,384 surface points** using native PyTo
 *The network receives the partial object cloud. RGB-D reconstruction and object
 segmentation are upstream steps, not inputs required by the completion model.*
 
-## Results
-
-Reference-checkpoint results on the fixed 929-observation validation cohort:
-
-| Method | CD-L1 ↓ | CD-L2 ↓ | F@0.03 ↑ | F@0.05 ↑ | Dimension MAE ↓ |
-| :--- | ---: | ---: | ---: | ---: | ---: |
-| SnowflakeNet FT | 0.42271 | 8.34760 | 0.65293 | **0.75463** | 0.34238 |
-| **VEIL-Net** | **0.38629** | **6.97737** | **0.65844** | 0.75428 | **0.22846** |
-
-CD-L2 is **16.41% lower** and dimension MAE is **33.27% lower** than SnowflakeNet FT.
-The [evaluation protocol](configs/validation.json) fixes the cohort, seed, and
-4,096-point metric resolution. These measurements belong to the saved reference
-checkpoint; the standalone training recipe is not an exact replay of its staged training.
+## Qualitative comparison
 
 <p align="center">
   <a href="figures/qualitative-comparison.png"><img src="figures/qualitative-comparison.png" width="1000" alt="Completion examples: input, Fusion, PoinTr, SnowflakeNet, VEIL-Net, and ground truth"></a>
 </p>
 
-*Author-provided qualitative comparison, with labels preserved as supplied.
-The quantitative table uses the task-finetuned SnowflakeNet baseline.*
+*Author-provided qualitative comparison, with labels preserved as supplied.*
 
 ## Installation
 
