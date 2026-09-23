@@ -54,26 +54,6 @@ the network receives the partial target cloud shown in orange.*
 The implementation uses native PyTorch operations, with no project-specific
 CUDA extension. See the [architecture](docs/ARCHITECTURE.md) for the full data flow.
 
-## Results
-
-On the fixed **929-observation validation cohort**, the reference checkpoint has
-**16.41% lower CD-L2** and **33.27% lower dimension MAE** than task-finetuned
-SnowflakeNet. The cohort contains T-LESS, TUD-L, and YCB-Video observations.
-
-| Method | CD-L1 ↓ | CD-L2 ↓ | F@0.03 ↑ | F@0.05 ↑ | Dimension MAE ↓ |
-| :--- | ---: | ---: | ---: | ---: | ---: |
-| SnowflakeNet FT | 0.42271 | 8.34760 | 0.65293 | **0.75463** | 0.34238 |
-| **VEIL-Net** | **0.38629** | **6.97737** | **0.65844** | 0.75428 | **0.22846** |
-
-These are measured reference-checkpoint results, rechecked on the full cohort
-with 4,096 evaluation points and seed 0. [Per-observation scores](benchmarks/bundled_samples.csv),
-[evaluation metadata](benchmarks/bundled_evaluation.json), and the
-[metric definitions](benchmarks/README.md) are included.
-
-The [complete research results](docs/RESULTS.md) retain all manuscript tables,
-including component studies, dataset-level results, and bootstrap intervals.
-The separately reported F-scores **0.72843 / 0.89253** have not been reproduced by
-the reference checkpoint and are not claimed for the results above.
 
 ### Qualitative comparison
 
