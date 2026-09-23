@@ -1,10 +1,16 @@
 import torch
 
-from rapc_net.losses.completion import CompletionLoss, surface_l2, chamfer_l1, soft_fscore_loss, local_repulsion
+from veil_net.losses.completion import (
+    CompletionLoss,
+    chamfer_l1,
+    local_repulsion,
+    soft_fscore_loss,
+    surface_l2,
+)
 
 
 def test_repulsion_separates_close_points_without_self_neighbors():
-    points = torch.tensor([[[0., 0., 0.], [0.01, 0., 0.]]], requires_grad=True)
+    points = torch.tensor([[[0.0, 0.0, 0.0], [0.01, 0.0, 0.0]]], requires_grad=True)
     loss = local_repulsion(points)
     gradient = torch.autograd.grad(loss, points)[0]
     assert gradient[0, 0, 0] > 0 and gradient[0, 1, 0] < 0
@@ -21,7 +27,7 @@ def test_repulsion_duplicates_and_singleton_are_finite():
 
 
 def test_repulsion_weight_and_raw_logging():
-    points = torch.tensor([[[0., 0., 0.], [0.01, 0., 0.]]])
+    points = torch.tensor([[[0.0, 0.0, 0.0], [0.01, 0.0, 0.0]]])
     criterion = CompletionLoss(lambda_cd=0, lambda_uniform=0, lambda_repulsion=0.02)
     loss, parts = criterion({"completed_points": points}, {"complete": points})
     torch.testing.assert_close(loss, local_repulsion(points) * 0.02)
@@ -41,8 +47,8 @@ def test_surface_loss_matches_dense_values_and_gradients():
 
 
 def test_surface_gradient_moves_outlier_toward_surface():
-    target = torch.tensor([[[0., 0., 0.], [1., 0., 0.]]])
-    pred = torch.tensor([[[0., 0., 2.], [1., 0., 0.]]], requires_grad=True)
+    target = torch.tensor([[[0.0, 0.0, 0.0], [1.0, 0.0, 0.0]]])
+    pred = torch.tensor([[[0.0, 0.0, 2.0], [1.0, 0.0, 0.0]]], requires_grad=True)
     before = surface_l2(pred, target)
     gradient = torch.autograd.grad(before, pred)[0]
     assert surface_l2(pred - 0.1 * gradient, target) < before
@@ -50,7 +56,7 @@ def test_surface_gradient_moves_outlier_toward_surface():
 
 
 def test_raw_loss_is_independent_of_weight():
-    pred = torch.tensor([[[0., 0., 2.]]], requires_grad=True)
+    pred = torch.tensor([[[0.0, 0.0, 2.0]]], requires_grad=True)
     target = torch.zeros_like(pred)
     loss_fn = CompletionLoss(lambda_cd=0, lambda_surface=0.5, lambda_uniform=0)
     total, parts = loss_fn({"completed_points": pred}, {"complete": target})
@@ -67,12 +73,14 @@ def test_chunked_chamfer_matches_dense_gradients():
     matrix = torch.cdist(pred, target)
     expected = matrix.min(1).values.mean() + matrix.min(2).values.mean()
     torch.testing.assert_close(actual, expected)
-    torch.testing.assert_close(torch.autograd.grad(actual, pred)[0], torch.autograd.grad(expected, pred)[0])
+    torch.testing.assert_close(
+        torch.autograd.grad(actual, pred)[0], torch.autograd.grad(expected, pred)[0]
+    )
 
 
 def test_soft_fscore_improves_with_surface_approach():
-    target = torch.tensor([[[0., 0., 0.], [1., 0., 0.]]])
-    pred = (target + torch.tensor([0., 0., 0.25])).requires_grad_()
+    target = torch.tensor([[[0.0, 0.0, 0.0], [1.0, 0.0, 0.0]]])
+    pred = (target + torch.tensor([0.0, 0.0, 0.25])).requires_grad_()
     loss = soft_fscore_loss(pred, target)
     grad = torch.autograd.grad(loss, pred)[0]
     assert torch.isfinite(grad).all()
@@ -81,12 +89,20 @@ def test_soft_fscore_improves_with_surface_approach():
 
 
 def test_missing_supervision_targets_final_output_when_enabled():
-    final = torch.tensor([[[0., 0., 0.]]], requires_grad=True)
-    generated = torch.tensor([[[4., 0., 0.]]], requires_grad=True)
-    target = torch.tensor([[[2., 0., 0.]]])
-    loss_fn = CompletionLoss(lambda_cd=0, lambda_missing=1, lambda_preserve=0,
-        lambda_uniform=0, missing_on_completed=True)
-    loss, _ = loss_fn({"completed_points": final, "generated_points": generated}, {"complete": target, "partial": final.detach()})
+    final = torch.tensor([[[0.0, 0.0, 0.0]]], requires_grad=True)
+    generated = torch.tensor([[[4.0, 0.0, 0.0]]], requires_grad=True)
+    target = torch.tensor([[[2.0, 0.0, 0.0]]])
+    loss_fn = CompletionLoss(
+        lambda_cd=0,
+        lambda_missing=1,
+        lambda_preserve=0,
+        lambda_uniform=0,
+        missing_on_completed=True,
+    )
+    loss, _ = loss_fn(
+        {"completed_points": final, "generated_points": generated},
+        {"complete": target, "partial": final.detach()},
+    )
     loss.backward()
     assert final.grad[0, 0, 0] < 0
     assert generated.grad is None

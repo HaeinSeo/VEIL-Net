@@ -1,2 +1,0 @@
-model,source_status,cd_l1,cd_l2,f_score_003,f_score_005,dimension_mae
-VEIL-Net,author-reported external run; raw export not present,0.38629,6.97737,0.72843,0.89253,0.22846

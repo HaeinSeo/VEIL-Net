@@ -1,16 +1,10 @@
-include LICENSE README.md README_KO.md THIRD_PARTY_NOTICES.md
-include CONTRIBUTING.md .gitignore .gitattributes
-include CITATION.cff
-include scripts/prepare_release.py scripts/prepare_benchmarks.py
-include scripts/render_paper_results.py scripts/verify_paper_results.py
-include scripts/finetune_target_metrics.py scripts/search_target_metrics.py
-include scripts/build_public_bundle.py scripts/verify_bundle.py
+include LICENSE README.md THIRD_PARTY_NOTICES.md
+include .gitignore .gitattributes
 recursive-include .github/workflows *.yml
 recursive-include veil_net *.md
-recursive-include configs/release *.yaml
-recursive-include benchmarks *.md *.csv *.json
-recursive-include docs *.md
-recursive-include figures *.png *.md
+recursive-include configs *.yaml *.json
+recursive-include figures *.png
+recursive-include tests *.py
 prune cache
 prune checkpoints
 prune results

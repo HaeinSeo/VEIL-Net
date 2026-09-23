@@ -1,4 +1,4 @@
-"""Public VEIL-Net API with compatibility for original RAPC-Net checkpoints."""
+"""VEIL-Net point-cloud completion and portable model loading."""
 
 from veil_net.model import VEILNet, VEILNetConfig
 

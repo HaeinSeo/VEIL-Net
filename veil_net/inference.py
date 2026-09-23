@@ -7,8 +7,8 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from rapc_net.utils.pointcloud import sample_points, validate_points
 from veil_net.model import VEILNet
+from veil_net.utils.pointcloud import sample_points, validate_points
 
 
 def read_cloud(path: str | Path, key: str = "partial") -> np.ndarray:

@@ -1,1 +1,0 @@
-"""Pose-refinement evaluation utilities."""

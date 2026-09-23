@@ -147,13 +147,13 @@ def evaluate(args: argparse.Namespace) -> dict:
 
 
 def train(args: argparse.Namespace) -> dict:
-    from rapc_net.training.trainer import train_completion
-    from rapc_net.utils.io import load_yaml_like
+    from veil_net.training.trainer import train_completion
+    from veil_net.utils.io import load_yaml_like
 
     config = load_yaml_like(args.config)
     return train_completion(
         project_root=args.workspace.resolve(),
-        model_name="rapc_net",
+        model_name="veil_net",
         device=args.device,
         seed=args.seed,
         epochs=args.epochs or int(config.get("epochs", 50)),

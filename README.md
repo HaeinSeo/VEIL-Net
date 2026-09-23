@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="figures/veil-mascot.png" width="170" alt="VEIL-Net mascot, a pixel-art figure carrying a lantern">
+  <img src="figures/veil-mascot.png" width="160" alt="VEIL-Net mascot carrying a lantern">
 </p>
 
 <h1 align="center">VEIL-Net</h1>
@@ -10,85 +10,47 @@
 
 <p align="center">
   <a href="https://github.com/HaeinSeo/VEIL-Net/actions/workflows/tests.yml"><img src="https://github.com/HaeinSeo/VEIL-Net/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
-  <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python 3.10 and later"></a>
-  <a href="pyproject.toml"><img src="https://img.shields.io/badge/PyTorch-2.3%2B-EE4C2C?logo=pytorch&logoColor=white" alt="PyTorch 2.3 and later"></a>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.10%2B-3776AB" alt="Python 3.10 and later"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-2D8053" alt="MIT license"></a>
 </p>
 
-<p align="center">
-  <a href="#overview">Overview</a> &middot;
-  <a href="#results">Results</a> &middot;
-  <a href="#getting-started">Getting started</a> &middot;
-  <a href="docs/ARCHITECTURE.md">Method</a> &middot;
-  <a href="docs/TRAINING.md">Training</a> &middot;
-  <a href="README_KO.md">한국어</a>
-</p>
-
-## Overview
-
-A partial scan records the visible surface of an object, not its full shape.
-VEIL-Net uses local surface geometry and coordinate-conditioned queries to infer
-the missing surface while retaining observed points. It takes **2,048 XYZ points**
-and returns **16,384 points** in the input coordinate frame.
-
-The model operates on an object-level point cloud. RGB-D acquisition, scene
-reconstruction, and object segmentation are upstream steps; inference does not
-require RGB, a complete target, or object dimensions.
+VEIL-Net completes an occluded object's surface from a partial point cloud.
+Local geometric features and coordinate-conditioned queries guide surface-patch
+generation, while observed points are retained in the output.
+The model maps **2,048 input points to 16,384 surface points** using native PyTorch.
 
 <p align="center">
-  <img src="figures/scene-completion.png" width="760" alt="Two scene examples showing RGB images, scene point clouds, partial object inputs, and VEIL-Net completions">
+  <img src="figures/scene-completion.png" width="700" alt="Scene observations, partial object clouds, and VEIL-Net completions">
 </p>
 
-*From scene observations to completed object surfaces. Author-provided examples;
-the network receives the partial target cloud shown in orange.*
-
-### Method at a glance
-
-1. **Encode local geometry.** Point features, relative coordinates, and local
-   geometric descriptors form a spatial observation memory.
-2. **Query the missing surface.** Predicted patch centers condition decoder
-   queries that attend to the observed geometry.
-3. **Generate and preserve.** Two-stage folding produces surface patches, which
-   are combined with screened and resampled observations.
-
-The implementation uses native PyTorch operations, with no project-specific
-CUDA extension. See the [architecture](docs/ARCHITECTURE.md) for the full data flow.
+*The network receives the partial object cloud. RGB-D reconstruction and object
+segmentation are upstream steps, not inputs required by the completion model.*
 
 ## Results
 
-On the fixed **929-observation validation cohort**, the reference checkpoint has
-**16.41% lower CD-L2** and **33.27% lower dimension MAE** than task-finetuned
-SnowflakeNet. The cohort contains T-LESS, TUD-L, and YCB-Video observations.
+Reference-checkpoint results on the fixed 929-observation validation cohort:
 
 | Method | CD-L1 ↓ | CD-L2 ↓ | F@0.03 ↑ | F@0.05 ↑ | Dimension MAE ↓ |
 | :--- | ---: | ---: | ---: | ---: | ---: |
 | SnowflakeNet FT | 0.42271 | 8.34760 | 0.65293 | **0.75463** | 0.34238 |
 | **VEIL-Net** | **0.38629** | **6.97737** | **0.65844** | 0.75428 | **0.22846** |
 
-These are measured reference-checkpoint results, rechecked on the full cohort
-with 4,096 evaluation points and seed 0. [Per-observation scores](benchmarks/bundled_samples.csv),
-[evaluation metadata](benchmarks/bundled_evaluation.json), and the
-[metric definitions](benchmarks/README.md) are included.
-
-The [complete research results](docs/RESULTS.md) retain all manuscript tables,
-including component studies, dataset-level results, and bootstrap intervals.
-The separately reported F-scores **0.72843 / 0.89253** have not been reproduced by
-the reference checkpoint and are not claimed for the results above.
-
-### Qualitative comparison
+CD-L2 is **16.41% lower** and dimension MAE is **33.27% lower** than SnowflakeNet FT.
+The [evaluation protocol](configs/validation.json) fixes the cohort, seed, and
+4,096-point metric resolution. These measurements belong to the saved reference
+checkpoint; the standalone training recipe is not an exact replay of its staged training.
 
 <p align="center">
-  <a href="figures/qualitative-comparison.png"><img src="figures/qualitative-comparison.png" width="1040" alt="Point-cloud completion examples comparing partial inputs, Fusion, PoinTr, SnowflakeNet, VEIL-Net, and ground truth"></a>
+  <a href="figures/qualitative-comparison.png"><img src="figures/qualitative-comparison.png" width="1000" alt="Completion examples: input, Fusion, PoinTr, SnowflakeNet, VEIL-Net, and ground truth"></a>
 </p>
 
-*Author-provided qualitative comparison. Columns follow the labels in the supplied
-figure; the quantitative table above uses the task-finetuned SnowflakeNet baseline.
-Open the image for the full-resolution version.*
+*Author-provided qualitative comparison, with labels preserved as supplied.
+The quantitative table uses the task-finetuned SnowflakeNet baseline.*
 
-## Getting started
+## Installation
 
-Use Python 3.10 or later and install a PyTorch build appropriate for your CPU or
-GPU, then install the project:
+Python 3.10+ and PyTorch 2.3+ are required. Install a PyTorch build suitable for
+your CPU or GPU, then run:
 
 ```bash
 git clone https://github.com/HaeinSeo/VEIL-Net.git
@@ -97,23 +59,21 @@ python -m pip install -e ".[dev,hub]"
 python -m veil_net smoke
 ```
 
-The smoke test runs a small model through forward/backward passes and a
-safetensors round trip. It does not need a dataset, pretrained weights, or a GPU.
+The smoke test checks forward/backward passes and a weight export round trip.
+It needs no dataset or pretrained weights. **This repository contains source
+code, not pretrained weights or datasets.**
 
-**Weights:** this Git repository contains source code and evaluation records,
-not pretrained weights or datasets. The inference examples below require an
-exported model directory containing `config.json` and `model.safetensors`.
-The [training guide](docs/TRAINING.md) covers training and checkpoint export.
+## Usage
 
-### Complete a point cloud
+### Inference
 
-With exported weights in `model/` and a finite `[N, 3]` XYZ array in `partial.npy`:
+Place exported `config.json` and `model.safetensors` files in `model/`:
 
 ```bash
 python -m veil_net infer --model model --input partial.npy --output results/completion.npz
 ```
 
-Add `--device cuda` for GPU inference. The same interface is available in Python:
+Add `--device cuda` for GPU inference. The output key is `prediction_complete`.
 
 ```python
 import numpy as np
@@ -122,52 +82,72 @@ from veil_net import VEILNet
 from veil_net.inference import predict
 
 model = VEILNet.from_pretrained("model")
-result = predict(model, np.load("partial.npy", allow_pickle=False))
-complete = result["prediction_complete"]  # [16384, 3], input frame and units
+complete = predict(model, np.load("partial.npy", allow_pickle=False))["prediction_complete"]
 ```
 
-### Evaluate
-
-For prepared validation pairs matching the published protocol:
+### Training
 
 ```bash
-python -m veil_net evaluate --model model --pairs cache/completion_pairs/val --protocol benchmarks/validation_protocol.json --max-samples 0 --eval-points 4096 --device cpu --output results/full-validation
-python scripts/verify_paper_results.py --report results/full-validation/report.json --reference saved
+python -m veil_net train --config configs/train.yaml --pairs data/train --device cuda
 ```
 
-Evaluation writes a per-observation CSV and a JSON report with model and data
-hashes. See the [data format](docs/DATA_FORMAT.md) before preparing your own pairs.
-The comparison command checks reproduction of the saved reference, not whether
-a newly trained model is better.
+The configuration trains from scratch. Add `--resume` to continue the same run;
+use a different `run_name` in the configuration for a new experiment.
 
-### Train
+### Evaluation
+
+For prepared pairs matching the reference cohort:
 
 ```bash
-python -m veil_net train --config configs/release/veil_geometry.yaml --pairs cache/completion_pairs/train --device cuda
+python -m veil_net evaluate --model model --pairs data/val --protocol configs/validation.json --max-samples 0 --eval-points 4096 --device cpu --output results/validation
 ```
 
-This is a standalone training recipe. The reference checkpoint used staged
-fine-tuning; running this recipe alone is not an exact replay of that training.
-See [training and fine-tuning](docs/TRAINING.md) for initialization, evaluation,
-and the bounded target-metric search.
+For your own validation split, omit `--protocol`. Reports contain per-observation
+metrics, sample IDs, and model/data hashes. Always keep coordinate units and
+sampling settings consistent when comparing results.
 
-## Repository
+### Checkpoint export
+
+```bash
+python -m veil_net export --checkpoint checkpoints/veil_geometry/seed_0/last.pt --output model
+```
+
+Export writes portable weights, configuration, a model card, and provenance.
+Existing checkpoint parameter names are preserved.
+
+## Data format
+
+Inference accepts a finite `[N, 3]` XYZ array in `.npy`, or a `.npz` file with a
+`partial` array. Each input must describe one segmented object. The model
+normalizes its input internally and restores the original frame and units.
+
+Training and evaluation use one `.npz` file per observation:
+
+| Key | Shape | Purpose |
+| --- | --- | --- |
+| `partial` | `[2048, 3]` | Observed XYZ points |
+| `complete` | `[16384, 3]` | Registered target surface |
+| `risk_target` | `[2048]` | Optional observation-quality supervision |
+
+Use unique sample IDs and disjoint training/validation observations. A complete
+target is used for training and evaluation, never as an inference input.
+
+## Code
 
 ```text
-veil_net/          Public API, command-line interface, portable model loading
-rapc_net/          Model, losses, data loading, and training implementation
-configs/release/   Training and fine-tuning configurations
-benchmarks/        Result tables, fixed evaluation protocol, and provenance
-figures/           Project mascot and qualitative results
-scripts/           Evaluation checks, training search, and release tools
-tests/             Model, metric, serialization, and packaging tests
-docs/              Method, data format, results, and release documentation
+veil_net/
+  models/       Point encoder, local geometry, surface decoder, preservation
+  losses/       Geometry, coverage, and observation-quality losses
+  training/     Training loop and checkpoint handling
+  evaluation/   Metrics and reproducible evaluation
+  datasets/     Optional training-pair audit
+  utils/        I/O, point sampling, and reproducibility helpers
+  model.py      VEILNet and portable weight loading
+  cli.py        Training, inference, evaluation, and export commands
+configs/        Training recipe and reference evaluation protocol
+tests/          Model, API, metric, and training regression tests
+figures/        Project mascot and qualitative examples
 ```
-
-The internal `rapc_net` namespace is retained for checkpoint compatibility;
-the public model class is `VEILNet`.
-
-## Development
 
 ```bash
 python -m pytest -q
@@ -175,15 +155,7 @@ python -m ruff check
 python -m build
 ```
 
-The test suite uses synthetic inputs and temporary checkpoints. GitHub Actions
-checks Linux and Windows with Python 3.10 and 3.12. See [contributing](CONTRIBUTING.md)
-for changes to model behavior or benchmark reporting.
+## License
 
-## License and attribution
-
-Original project code is available under the [MIT License](LICENSE). Datasets
-and external baselines retain their own terms; see [third-party notices](THIRD_PARTY_NOTICES.md).
-The mascot and qualitative figures were supplied by the project author; their
-source files are documented in [figure notes](figures/README.md).
-
-For software citations, use [CITATION.cff](CITATION.cff).
+Original code is released under the [MIT License](LICENSE).
+Dataset and baseline terms are listed in [third-party notices](THIRD_PARTY_NOTICES.md).

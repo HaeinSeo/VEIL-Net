@@ -5,9 +5,9 @@ import numpy as np
 import pytest
 import torch
 
-from rapc_net.models import RAPCNet, RAPCNetConfig
 from veil_net import VEILNet, VEILNetConfig
 from veil_net.inference import predict, prepare_input, read_cloud
+from veil_net.models import CompletionConfig, CompletionNetwork
 
 
 def tiny_model():
@@ -23,7 +23,7 @@ def test_public_defaults_match_geometry_query_architecture():
     assert config.geometry_queries and config.query_position_conditioning
     assert config.robust_input_geometry and config.two_stage_folding
     assert config.bbox_margin == 0 and not config.uncertainty_moves_points
-    assert not RAPCNetConfig().geometry_queries
+    assert not CompletionConfig().geometry_queries
 
 
 def test_checkpoint_and_portable_export_preserve_predictions(tmp_path):
@@ -46,8 +46,8 @@ def test_checkpoint_and_portable_export_preserve_predictions(tmp_path):
 
 
 def test_legacy_defaults_not_replaced_by_new_defaults(tmp_path):
-    config = RAPCNetConfig(hidden_dim=16, output_points=32)
-    legacy = RAPCNet(config)
+    config = CompletionConfig(hidden_dim=16, output_points=32)
+    legacy = CompletionNetwork(config)
     saved = asdict(config)
     del saved["geometry_queries"]
     path = tmp_path / "old.pt"

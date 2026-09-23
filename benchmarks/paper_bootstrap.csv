@@ -1,5 +1,0 @@
-metric,mean_difference,ci95_low,ci95_high,comparison,unit
-cd_l1,-0.03642,-0.11561,0.01929,VEIL-Net saved checkpoint minus SnowflakeNet FT,metric_units
-cd_l2,-1.37024,-4.47204,0.45013,VEIL-Net saved checkpoint minus SnowflakeNet FT,metric_units
-f_score_003,0.00551,0.00101,0.01031,VEIL-Net saved checkpoint minus SnowflakeNet FT,fraction
-dimension_mae,-0.11393,-0.19867,-0.06138,VEIL-Net saved checkpoint minus SnowflakeNet FT,metric_units

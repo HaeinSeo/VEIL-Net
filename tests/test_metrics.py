@@ -1,6 +1,6 @@
 import numpy as np
 
-from rapc_net.evaluation.metrics import evaluate_completion
+from veil_net.evaluation.metrics import evaluate_completion
 
 
 def test_identical_cloud_has_zero_chamfer():

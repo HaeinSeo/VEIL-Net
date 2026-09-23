@@ -137,7 +137,7 @@ def test_evaluation_uses_protocol_seed(tmp_path, prepared):
 
 
 def test_train_passes_explicit_pair_directory(tmp_path, monkeypatch):
-    import rapc_net.training.trainer as trainer
+    import veil_net.training.trainer as trainer
 
     config = tmp_path / "config.yaml"
     config.write_text("epochs: 1\nbatch_size: 1\noutput_points: 32\n")
@@ -158,3 +158,4 @@ def test_train_passes_explicit_pair_directory(tmp_path, monkeypatch):
     )
     assert calls[0]["pairs_dir"] == (tmp_path / "pairs").resolve()
     assert calls[0]["confirm"] is True
+    assert calls[0]["model_name"] == "veil_net"

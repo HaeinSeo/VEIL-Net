@@ -10,11 +10,11 @@ from pathlib import Path
 import torch
 from safetensors.torch import load_file, save_file
 
-from rapc_net.models import RAPCNet, RAPCNetConfig
+from veil_net.models import CompletionConfig, CompletionNetwork
 
 
 @dataclass(frozen=True)
-class VEILNetConfig(RAPCNetConfig):
+class VEILNetConfig(CompletionConfig):
     """Architecture used by the geometry-query and coverage-balance runs."""
 
     bbox_margin: float = 0.0
@@ -34,7 +34,7 @@ def sha256_file(path: str | Path) -> str:
     return digest.hexdigest()
 
 
-class VEILNet(RAPCNet):
+class VEILNet(CompletionNetwork):
     """VEIL-Net, retaining the original state-dict keys for exact compatibility.
 
     ``forward`` accepts floating-point XYZ tensors of shape [B, N, 3] and
@@ -42,7 +42,7 @@ class VEILNet(RAPCNet):
     and ``torch.inference_mode`` for inference; no target surface is required.
     """
 
-    def __init__(self, config: RAPCNetConfig | None = None) -> None:
+    def __init__(self, config: CompletionConfig | None = None) -> None:
         super().__init__(config if config is not None else VEILNetConfig())
 
     @classmethod
@@ -51,8 +51,8 @@ class VEILNet(RAPCNet):
         state = torch.load(path, map_location="cpu", weights_only=True)
         if not isinstance(state, dict) or not {"model", "model_config"} <= state.keys():
             raise ValueError("Checkpoint must contain model and model_config mappings")
-        # Older checkpoints must keep RAPC defaults for fields absent at training time.
-        model = cls(RAPCNetConfig(**state["model_config"]))
+        # Older checkpoints must keep original defaults for fields absent at training time.
+        model = cls(CompletionConfig(**state["model_config"]))
         model.load_state_dict(state["model"], strict=True)
         model.artifact_metadata = {"checkpoint_sha256": sha256_file(path)}
         return model.to(device).eval()
@@ -107,7 +107,7 @@ class VEILNet(RAPCNet):
         data = json.loads(config_path.read_text(encoding="utf-8"))
         if data.get("format_version") != 1 or data.get("architecture") != "VEILNet":
             raise ValueError("Unsupported VEIL-Net export format or architecture")
-        model = cls(RAPCNetConfig(**data["model_config"]))
+        model = cls(CompletionConfig(**data["model_config"]))
         model.load_state_dict(load_file(str(weights_path), device="cpu"), strict=True)
         model.artifact_metadata = {
             "weights_sha256": sha256_file(weights_path),
