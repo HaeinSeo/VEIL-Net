@@ -141,6 +141,14 @@ python -m pytest -q
 python -m ruff check
 python -m build
 ```
+## References
+
+[1] T. Hodaň, P. Haluza, Š. Obdržálek, J. Matas, M. Lourakis, and X. Zabulis, “T-LESS: An RGB-D Dataset for 6D Pose Estimation of Texture-less Objects,” IEEE Winter Conference on Applications of Computer Vision (WACV), 2017.
+
+[2] T. Hodaň et al., “BOP: Benchmark for 6D Object Pose Estimation,” European Conference on Computer Vision (ECCV), 2018.
+
+[3] Y. Xiang, T. Schmidt, V. Narayanan, and D. Fox, “PoseCNN: A Convolutional Neural Network for 6D Object Pose Estimation in Cluttered Scenes,” Robotics: Science and Systems (RSS), 2018.
+
 
 ## License
 
