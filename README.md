@@ -9,9 +9,15 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/HaeinSeo/VEIL-Net/actions/workflows/tests.yml"><img src="https://github.com/HaeinSeo/VEIL-Net/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
-  <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.10%2B-3776AB" alt="Python 3.10 and later"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-2D8053" alt="MIT license"></a>
+  <a href="pyproject.toml">
+    <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB" alt="Python 3.10+">
+  </a>
+  <a href="pyproject.toml">
+    <img src="https://img.shields.io/badge/PyTorch-2.3%2B-EE4C2C" alt="PyTorch 2.3+">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-2D8053" alt="MIT License">
+  </a>
 </p>
 
 VEIL-Net completes an occluded object's surface from a partial point cloud.
