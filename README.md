@@ -149,6 +149,10 @@ python -m build
 
 [3] Y. Xiang, T. Schmidt, V. Narayanan, and D. Fox, “PoseCNN: A Convolutional Neural Network for 6D Object Pose Estimation in Cluttered Scenes,” Robotics: Science and Systems (RSS), 2018.
 
+[4] X. Yu, Y. Rao, Z. Wang, Z. Liu, J. Lu, and J. Zhou, “PoinTr: Diverse Point Cloud Completion with Geometry-Aware Transformers,” Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), pp. 12498–12507, 2021.
+
+[5] P. Xiang, X. Wen, Y.-S. Liu, Y.-P. Cao, P. Wan, W. Zheng, and Z. Han, “SnowflakeNet: Point Cloud Completion by Snowflake Point Deconvolution with Skip-Transformer,” Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), pp. 5499–5509, 2021.
+
 
 ## License
 
