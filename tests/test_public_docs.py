@@ -37,6 +37,7 @@ def test_readme_links_and_figures_resolve():
     assert images == {
         "figures/veil-mascot.png",
         "figures/scene-completion.png",
+        "figures/veil-net-architecture.drawio.png",
         "figures/qualitative-comparison.png",
     }
     for name in images:

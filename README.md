@@ -26,6 +26,15 @@ The model maps **2,048 input points to 16,384 surface points** using native PyTo
 *The network receives the partial object cloud. RGB-D reconstruction and object
 segmentation are upstream steps, not inputs required by the completion model.*
 
+## Architecture
+
+<p align="center">
+  <a href="figures/veil-net-architecture.drawio.png"><img src="figures/veil-net-architecture.drawio.png" width="1000" alt="VEIL-Net architecture: input preprocessing, observation encoding, coordinate conditioning, surface reconstruction, and integration"></a>
+</p>
+
+*Observation encoding and coordinate-conditioned surface generation with an
+observed-point preservation path.*
+
 ## Qualitative comparison
 
 <p align="center">
@@ -133,7 +142,7 @@ veil_net/
   cli.py        Training, inference, evaluation, and export commands
 configs/        Training recipe and reference evaluation protocol
 tests/          Model, API, metric, and training regression tests
-figures/        Project mascot and qualitative examples
+figures/        Project mascot, architecture, and qualitative examples
 ```
 
 ```bash
