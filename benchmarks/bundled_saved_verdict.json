@@ -1,0 +1,44 @@
+{
+  "reference": "saved",
+  "matches": true,
+  "protocol_checks": {
+    "cohort": true,
+    "sample_count": true,
+    "seed": true,
+    "eval_points": true,
+    "missing_threshold": true
+  },
+  "absolute_tolerance": 1e-05,
+  "metrics": {
+    "cd_l1": {
+      "expected": 0.3862854039552897,
+      "actual": 0.3862854039552897,
+      "difference": 0.0,
+      "matches": true
+    },
+    "cd_l2": {
+      "expected": 6.977365067438165,
+      "actual": 6.977365067438165,
+      "difference": 0.0,
+      "matches": true
+    },
+    "f_score_003": {
+      "expected": 0.6584363144863333,
+      "actual": 0.6584363144863333,
+      "difference": 0.0,
+      "matches": true
+    },
+    "f_score_005": {
+      "expected": 0.7542849165784128,
+      "actual": 0.7542849165784128,
+      "difference": 0.0,
+      "matches": true
+    },
+    "dimension_mae": {
+      "expected": 0.2284574693290853,
+      "actual": 0.2284574693290853,
+      "difference": 0.0,
+      "matches": true
+    }
+  }
+}

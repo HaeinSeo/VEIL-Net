@@ -1,0 +1,6 @@
+metric,improvement,unit,direction,comparison
+cd_l1,8.62,percent,decrease,VEIL-Net external vs SnowflakeNet FT
+cd_l2,16.41,percent,decrease,VEIL-Net external vs SnowflakeNet FT
+f_score_003,7.55,percentage_points,increase,VEIL-Net external vs SnowflakeNet FT
+f_score_005,13.79,percentage_points,increase,VEIL-Net external vs SnowflakeNet FT
+dimension_mae,33.27,percent,decrease,VEIL-Net external vs SnowflakeNet FT

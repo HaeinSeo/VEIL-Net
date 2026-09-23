@@ -1,0 +1,7 @@
+model,cd_l1,cd_l2,f_score_003,f_score_005,dimension_mae,source
+Fusion,0.53061,9.53184,0.38348,0.47510,0.34924,author_supplied_manuscript
+PoinTr,0.55067,9.52597,0.27878,0.39670,0.43411,author_supplied_manuscript
+AdaPoinTr,0.52486,9.62343,0.32947,0.44170,0.42771,author_supplied_manuscript
+SnowflakeNet,0.51613,9.50329,0.33311,0.46123,0.43646,author_supplied_manuscript
+SnowflakeNet FT,0.42271,8.34760,0.65293,0.75463,0.34238,author_supplied_manuscript
+VEIL-Net,0.38629,6.97737,0.72843,0.89253,0.22846,author_reported_external_run

@@ -1,0 +1,26 @@
+{
+  "candidate": {
+    "path": "results/diagnostics/coverage_balance_20260912_150837_6745/comparison.csv",
+    "sha256": "7f2daa2be8ec64ef7ae27d35f10fc95fc594c063eb79022e8390bf1498aa5e3c"
+  },
+  "baseline": {
+    "path": "results/diagnostics/full_vs_task_snow_cpu/comparison.csv",
+    "sha256": "6a10856a64a8615575ed03823f6448212fb74ecbd8c61cd729b61c9d60eae885"
+  },
+  "protocol": {
+    "path": "results/diagnostics/coverage_balance_20260912_150837_6745/protocol.json",
+    "sha256": "3a5c8b6ac326508b5b6252cc1a02bde57bc50c23e8501b541a78f235edf5a1eb"
+  },
+  "controls": {
+    "path": "results/diagnostics/query_controls/20260916_005454_214586/comparison.csv",
+    "sha256": "ff32e46818788ef75410dcb9089de386cb33f44dc4d211c0e8409ef66a645890"
+  },
+  "dataset_groups": {
+    "path": "results/paper_analysis/rapc_coverage_balance_val_20260912_172607_000098/occlusion_all_models.csv",
+    "sha256": "67c1ea9f708d207df6bfc57240ac33737e07f853268228897dc9f41b0b4a7f73"
+  },
+  "bootstrap": {
+    "path": "results/paper_analysis/rapc_coverage_balance_val_20260912_172607_000098/paired_scene_bootstrap.csv",
+    "sha256": "2e7839fc6e99d2f7c6894e13c3613fd3fbed439a214ef86f92298cfe28cff56e"
+  }
+}

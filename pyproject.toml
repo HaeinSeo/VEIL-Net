@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "veil-net"
+version = "0.2.0"
+description = "Geometry-conditioned surface completion for occluded 3D objects."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["point-cloud", "3d", "completion", "pytorch", "veil-net"]
+dependencies = [
+  "numpy>=1.24",
+  "torch>=2.3",
+  "pyyaml>=6",
+  "tqdm>=4.65",
+  "safetensors>=0.4",
+]
+
+[project.optional-dependencies]
+hub = ["huggingface-hub>=0.26"]
+research = ["matplotlib>=3.7", "scipy>=1.10", "pillow>=9"]
+dev = ["pytest>=8", "build>=1", "ruff>=0.9"]
+
+[project.urls]
+Repository = "https://github.com/HaeinSeo/VEIL-Net"
+Documentation = "https://github.com/HaeinSeo/VEIL-Net#readme"
+Issues = "https://github.com/HaeinSeo/VEIL-Net/issues"
+
+[project.scripts]
+veil = "veil_net.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["veil_net*", "rapc_net*", "adapters*"]
+exclude = ["*.tests*"]
+
+[tool.setuptools.package-data]
+veil_net = ["model_card.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+include = ["veil_net/**/*.py", "tests/test_public_*.py", "scripts/prepare_release.py", "scripts/prepare_benchmarks.py", "scripts/render_paper_results.py", "scripts/verify_paper_results.py", "scripts/finetune_target_metrics.py", "scripts/search_target_metrics.py", "scripts/build_public_bundle.py", "scripts/verify_bundle.py"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

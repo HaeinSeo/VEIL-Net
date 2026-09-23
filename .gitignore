@@ -1,0 +1,78 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local environments
+.venv/
+.venv*/
+venv/
+env/
+*.egg-info/
+build/
+dist/
+releases/
+.env
+.env.*
+!.env.example
+
+# Heavy experiment artifacts
+cache/
+checkpoints/
+predictions/
+logs/
+status/
+backups/
+results/
+manifests/
+results/**/*.npz
+results/**/*.pt
+results/**/*.pth
+results/**/*.ckpt
+visualizations/samples/
+visualizations/interactive/
+visualizations/videos/*.mp4
+visualizations/videos/*.gif
+
+# Local datasets and third-party repositories
+data/
+third_party/
+
+# Generated large point-cloud/media files
+*.ply
+*.pcd
+*.obj
+*.stl
+*.off
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+*.mp4
+*.avi
+*.mov
+*.gif
+
+# Keep source-controlled documentation/figures intentional.
+!figures/*.png
+!figures/*.pdf
+!figures/*.svg
+!tables/*.csv
+!docs/*.md
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

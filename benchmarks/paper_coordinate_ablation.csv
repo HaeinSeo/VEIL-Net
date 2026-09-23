@@ -1,0 +1,3 @@
+setting,cd_l2,f_score_003,f_score_005,missing_region_cd,observed_region_error
+Without coordinate conditioning,7.48764,0.61364,0.73557,0.15204,0.01616
+Full VEIL-Net (50 epochs),7.04963,0.63469,0.74313,0.13964,0.01531
