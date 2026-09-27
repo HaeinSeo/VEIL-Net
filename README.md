@@ -1,24 +1,10 @@
-<p align="center">
-  <img src="figures/veil-mascot.png" width="160" alt="VEIL-Net mascot carrying a lantern">
-</p>
+\<p align="center">   \<img src="figures/veil-mascot.png" width="160" alt="VEIL-Net mascot carrying a lantern"> \</p>
 
-<h1 align="center">VEIL-Net</h1>
+\<h1 align="center">VEIL-Net\</h1>
 
-<p align="center">
-  <strong>Visible-to-Entire Surface Inference via Local Geometry<br>for Occluded 3D Objects</strong>
-</p>
+\<p align="center">   \<strong>Visible-to-Entire Surface Inference via Local Geometry\<br>for Occluded 3D Objects\</strong> \</p>
 
-<p align="center">
-  <a href="pyproject.toml">
-    <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB" alt="Python 3.10+">
-  </a>
-  <a href="pyproject.toml">
-    <img src="https://img.shields.io/badge/PyTorch-2.3%2B-EE4C2C" alt="PyTorch 2.3+">
-  </a>
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-2D8053" alt="MIT License">
-  </a>
-</p>
+\<p align="center">   \<a href="pyproject.toml">     \<img src="[https://img.shields.io/badge/Python-3.10%2B-3776AB](https://img.shields.io/badge/Python-3.10%2B-3776AB)" alt="Python 3.10+">   \</a>   \<a href="pyproject.toml">     \<img src="[https://img.shields.io/badge/PyTorch-2.3%2B-EE4C2C](https://img.shields.io/badge/PyTorch-2.3%2B-EE4C2C)" alt="PyTorch 2.3+">   \</a>   \<a href="LICENSE">     \<img src="[https://img.shields.io/badge/License-MIT-2D8053](https://img.shields.io/badge/License-MIT-2D8053)" alt="MIT License">   \</a> \</p>
 
 VEIL-Net completes an occluded object's surface from a partial point cloud.
 Local geometric features and coordinate-conditioned queries guide surface-patch
@@ -26,37 +12,38 @@ generation, while observed points are retained in the output.
 
 The model maps **2,048 input points to 16,384 surface points** using native PyTorch.
 
-<p align="center">
-  <img src="figures/scene-completion.png" width="700" alt="Scene observations, partial object clouds, and VEIL-Net completions">
-</p>
+\<p align="center">   \<img src="figures/scene-completion.png" width="700" alt="Scene observations, partial object clouds, and VEIL-Net completions"> \</p>
 
-*The network receives the partial object cloud. RGB-D reconstruction and object
-segmentation are upstream steps, not inputs required by the completion model.*
+\<p align="center">   \<i>     The network receives the partial object cloud. RGB-D reconstruction and object     segmentation are upstream steps, not inputs required by the completion model.   \</i> \</p>
 
 ## Architecture
 
-<p align="center">
-  <a href="figures/veil-net-architecture.drawio.png">
-    <img src="figures/veil-net-architecture.drawio.png" width="1000" alt="VEIL-Net architecture: input preprocessing, observation encoding, coordinate conditioning, surface reconstruction, and integration">
-  </a>
-</p>
+\<p align="center">
+&#x20; \<a href="figures/veil-net-architecture.drawio.png">
+&#x20;   \<img src="figures/veil-net-architecture.drawio.png" width="1000" alt="VEIL-Net architecture: input preprocessing, observation encoding, coordinate conditioning, surface reconstruction, and integration">
+&#x20; \</a>
+\</p>
 
 VEIL-Net performs visible-to-entire surface inference through four main stages:
 
-1. **Observation Encoding**  
+1. **Observation Encoding**
    Extracts point-wise and local geometric features from the observed partial point cloud.
 
-2. **Observation-Quality Modeling**  
+2. **Observation-Quality Modeling**
    Estimates the reliability of local geometric evidence and adaptively routes features according to observation quality.
 
-3. **Coordinate-Conditioned Surface Generation**  
+3. **Coordinate-Conditioned Surface Generation**
    Predicts surface locations and conditions local features on the generated coordinates to reconstruct unobserved geometry.
 
-4. **Observed-Surface Preservation**  
+4. **Observed-Surface Preservation**
    Integrates generated hidden surfaces with the original observed points to retain reliable input geometry.
 
-*Observation encoding and coordinate-conditioned surface generation with an
-observed-point preservation path.*
+\<p align="center">
+&#x20; \<i>
+&#x20;   Observation encoding and coordinate-conditioned surface generation with an
+&#x20;   observed-point preservation path.
+&#x20; \</i>
+\</p>
 
 ## Results
 
@@ -67,24 +54,81 @@ The comparison includes a geometry-based fusion baseline and representative
 point-cloud completion networks, including PoinTr, AdaPoinTr, SnowflakeNet,
 and task-finetuned SnowflakeNet.
 
-| Method | CD-L1 ↓ | CD-L2 ↓ | F@0.03 ↑ | F@0.05 ↑ | Dim. MAE ↓ |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Fusion | 0.53061 | 9.53184 | 0.38348 | 0.47510 | 0.34924 |
-| PoinTr | 0.55067 | 9.52597 | 0.27878 | 0.39670 | 0.43411 |
-| AdaPoinTr | 0.52486 | 9.62343 | 0.32947 | 0.44170 | 0.42771 |
-| SnowflakeNet | 0.51613 | 9.50329 | 0.33311 | 0.46123 | 0.43646 |
-| SnowflakeNet FT | 0.42271 | 8.34760 | 0.65293 | 0.75463 | 0.34238 |
-| **VEIL-Net (Ours)** | **0.38629** | **6.97737** | **0.72843** | **0.89253** | **0.22846** |
+\<table align="center">
+&#x20; \<thead>
+&#x20;   \<tr>
+&#x20;     \<th align="center">Method\</th>
+&#x20;     \<th align="center">CD-L1 ↓\</th>
+&#x20;     \<th align="center">CD-L2 ↓\</th>
+&#x20;     \<th align="center">F\@0.03 ↑\</th>
+&#x20;     \<th align="center">F\@0.05 ↑\</th>
+&#x20;     \<th align="center">Dim. MAE ↓\</th>
+&#x20;   \</tr>
+&#x20; \</thead>
+&#x20; \<tbody>
+&#x20;   \<tr>
+&#x20;     \<td align="center">Fusion\</td>
+&#x20;     \<td align="center">0.53061\</td>
+&#x20;     \<td align="center">9.53184\</td>
+&#x20;     \<td align="center">0.38348\</td>
+&#x20;     \<td align="center">0.47510\</td>
+&#x20;     \<td align="center">0.34924\</td>
+&#x20;   \</tr>
+&#x20;   \<tr>
+&#x20;     \<td align="center">PoinTr\</td>
+&#x20;     \<td align="center">0.55067\</td>
+&#x20;     \<td align="center">9.52597\</td>
+&#x20;     \<td align="center">0.27878\</td>
+&#x20;     \<td align="center">0.39670\</td>
+&#x20;     \<td align="center">0.43411\</td>
+&#x20;   \</tr>
+&#x20;   \<tr>
+&#x20;     \<td align="center">AdaPoinTr\</td>
+&#x20;     \<td align="center">0.52486\</td>
+&#x20;     \<td align="center">9.62343\</td>
+&#x20;     \<td align="center">0.32947\</td>
+&#x20;     \<td align="center">0.44170\</td>
+&#x20;     \<td align="center">0.42771\</td>
+&#x20;   \</tr>
+&#x20;   \<tr>
+&#x20;     \<td align="center">SnowflakeNet\</td>
+&#x20;     \<td align="center">0.51613\</td>
+&#x20;     \<td align="center">9.50329\</td>
+&#x20;     \<td align="center">0.33311\</td>
+&#x20;     \<td align="center">0.46123\</td>
+&#x20;     \<td align="center">0.43646\</td>
+&#x20;   \</tr>
+&#x20;   \<tr>
+&#x20;     \<td align="center">SnowflakeNet FT\</td>
+&#x20;     \<td align="center">0.42271\</td>
+&#x20;     \<td align="center">8.34760\</td>
+&#x20;     \<td align="center">0.65293\</td>
+&#x20;     \<td align="center">0.75463\</td>
+&#x20;     \<td align="center">0.34238\</td>
+&#x20;   \</tr>
+&#x20;   \<tr>
+&#x20;     \<td align="center">\<strong>VEIL-Net (Ours)\</strong>\</td>
+&#x20;     \<td align="center">\<strong>0.38629\</strong>\</td>
+&#x20;     \<td align="center">\<strong>6.97737\</strong>\</td>
+&#x20;     \<td align="center">\<strong>0.72843\</strong>\</td>
+&#x20;     \<td align="center">\<strong>0.89253\</strong>\</td>
+&#x20;     \<td align="center">\<strong>0.22846\</strong>\</td>
+&#x20;   \</tr>
+&#x20; \</tbody>
+\</table>
 
-Lower values are better for **CD-L1**, **CD-L2**, and **Dimension MAE**.
-Higher values are better for **F@0.03** and **F@0.05**.
+\<p align="center">
+&#x20; \<sub>
+&#x20;   ↓ Lower is better &nbsp;&nbsp; | &nbsp;&nbsp; ↑ Higher is better
+&#x20; \</sub>
+\</p>
 
 Compared with the task-finetuned SnowflakeNet baseline, VEIL-Net achieves:
 
 - **8.62% lower CD-L1**
 - **16.41% lower CD-L2**
-- **+7.55 percentage points in F@0.03**
-- **+13.79 percentage points in F@0.05**
+- **+7.55 percentage points in F\@0.03**
+- **+13.79 percentage points in F\@0.05**
 - **33.27% lower Dimension MAE**
 
 These results indicate improved overall geometric reconstruction, surface
@@ -93,13 +137,17 @@ observations.
 
 ## Qualitative Comparison
 
-<p align="center">
-  <a href="figures/qualitative-comparison.png">
-    <img src="figures/qualitative-comparison.png" width="1000" alt="Completion examples: input, Fusion, PoinTr, SnowflakeNet, VEIL-Net, and ground truth">
-  </a>
-</p>
+\<p align="center">
+&#x20; \<a href="figures/qualitative-comparison.png">
+&#x20;   \<img src="figures/qualitative-comparison.png" width="1000" alt="Completion examples: input, Fusion, PoinTr, SnowflakeNet, VEIL-Net, and ground truth">
+&#x20; \</a>
+\</p>
 
-*Author-provided qualitative comparison, with labels preserved as supplied.*
+\<p align="center">
+&#x20; \<i>
+&#x20;   Author-provided qualitative comparison, with labels preserved as supplied.
+&#x20; \</i>
+\</p>
 
 ## Installation
 
@@ -220,11 +268,32 @@ units.
 
 Training and evaluation use one `.npz` file per observation:
 
-| Key | Shape | Purpose |
-| --- | --- | --- |
-| `partial` | `[2048, 3]` | Observed XYZ points |
-| `complete` | `[16384, 3]` | Registered target surface |
-| `risk_target` | `[2048]` | Optional observation-quality supervision |
+\<table align="center">
+&#x20; \<thead>
+&#x20;   \<tr>
+&#x20;     \<th align="center">Key\</th>
+&#x20;     \<th align="center">Shape\</th>
+&#x20;     \<th align="center">Purpose\</th>
+&#x20;   \</tr>
+&#x20; \</thead>
+&#x20; \<tbody>
+&#x20;   \<tr>
+&#x20;     \<td align="center">\<code>partial\</code>\</td>
+&#x20;     \<td align="center">\<code>[2048, 3]\</code>\</td>
+&#x20;     \<td align="center">Observed XYZ points\</td>
+&#x20;   \</tr>
+&#x20;   \<tr>
+&#x20;     \<td align="center">\<code>complete\</code>\</td>
+&#x20;     \<td align="center">\<code>[16384, 3]\</code>\</td>
+&#x20;     \<td align="center">Registered target surface\</td>
+&#x20;   \</tr>
+&#x20;   \<tr>
+&#x20;     \<td align="center">\<code>risk_target\</code>\</td>
+&#x20;     \<td align="center">\<code>[2048]\</code>\</td>
+&#x20;     \<td align="center">Optional observation-quality supervision\</td>
+&#x20;   \</tr>
+&#x20; \</tbody>
+\</table>
 
 Use unique sample IDs and disjoint training/validation observations.
 
@@ -274,14 +343,14 @@ Cluttered Scenes,”
 
 [4] X. Yu, Y. Rao, Z. Wang, Z. Liu, J. Lu, and J. Zhou,
 “PoinTr: Diverse Point Cloud Completion with Geometry-Aware Transformers,”
-*Proceedings of the IEEE/CVF International Conference on Computer Vision
-(ICCV)*, pp. 12498–12507, 2021.
+*Proceedings of the IEEE/CVF International Conference on Computer Vision*
+*(ICCV)*, pp. 12498–12507, 2021.
 
 [5] P. Xiang, X. Wen, Y.-S. Liu, Y.-P. Cao, P. Wan, W. Zheng, and Z. Han,
 “SnowflakeNet: Point Cloud Completion by Snowflake Point Deconvolution with
 Skip-Transformer,”
-*Proceedings of the IEEE/CVF International Conference on Computer Vision
-(ICCV)*, pp. 5499–5509, 2021.
+*Proceedings of the IEEE/CVF International Conference on Computer Vision*
+*(ICCV)*, pp. 5499–5509, 2021.
 
 ## License
 
